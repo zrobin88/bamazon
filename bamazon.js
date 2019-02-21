@@ -13,7 +13,7 @@ var connection = mysql.createConnection({
   user: "root",
 
   // Your password
-  password: "@Stang88gt",
+  password: "....",
   database: "bamazon"
 });
 
@@ -61,7 +61,7 @@ start =()=>{
               }
               
             }
-            if(chosenItemQuantity > answer.amount){
+            xif(chosenItemQuantity > answer.amount){
                 let chosenItemId = chosenItem.id; 
                 console.log("we got it");
                 console.log("Youre total is: $" + chosenItemPrice * answer.amount);
