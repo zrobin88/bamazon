@@ -61,7 +61,7 @@ start =()=>{
               }
               
             }
-            xif(chosenItemQuantity > answer.amount){
+            if(chosenItemQuantity > answer.amount){
                 let chosenItemId = chosenItem.id; 
                 console.log("we got it");
                 console.log("Youre total is: $" + chosenItemPrice * answer.amount);
