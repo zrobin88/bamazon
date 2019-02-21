@@ -50,30 +50,28 @@ start =()=>{
           }
         ])
         .then(function(answer) {
-            console.log(answer)
             var chosenItem;
             for (var i = 0; i < results.length; i++) {
               if (results[i].product_name === answer.choice) {
                 chosenItem = results[i];
                 chosenItemQuantity = results[i].quantity;
                 chosenItemPrice = results[i].price
+                
                 console.log(results[i].quantity);
               }
               
             }
             if(chosenItemQuantity > answer.amount){
+                let chosenItemId = chosenItem.id; 
                 console.log("we got it");
                 console.log("Youre total is: $" + chosenItemPrice * answer.amount);
-                connection.query(
-                  "UPDATE products SET quantity WHERE ?",
-                  [
-                    {
-                     quantity:chosenItemQuantity
-                    
-                    }
-                  ],
+                let queryUpdate = connection.query(
+                  "UPDATE products SET quantity = quantity - "+answer.amount+"WHERE"+chosenItemId,
+                  function (err, res) {
+                    console.log(res);
+                   }
                 );
-                console.log(chosenItemQuantity);
+                
                 connection.end();
             }
         });
