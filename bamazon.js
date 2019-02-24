@@ -57,26 +57,25 @@ start = () => {
             chosenItemQuantity = results[i].quantity;
             chosenItemPrice = results[i].price
 
-            console.log(results[i].quantity);
+            
           }
 
         }
         if (chosenItemQuantity > answer.amount) {
           //let chosenItemId = chosenItem.id;
-          console.log("we got it");
-          console.log("Youre total is: $" + chosenItemPrice * answer.amount);
-         
-          connection.query(
-            /*"UPDATE products SET quantity = quantity - " + answer.amount + "WHERE id =" + chosenItemId,
-            function (err, results) {
-              //for (let i = 0; i < results.length; i++) {
-              console.log(chosenItemQuantity-answer.amount + " Left in stock");
-
-              //}
-
-             } */ 
-
-             "UPDATE products SET ? WHERE ?",
+          console.log("We have it in stock!");
+          inquirer.prompt([
+            {
+                type: 'input',
+                name: 'firstChoice',
+                message: 'Add this item to your cart? (y/n): '
+            },
+        ]).then(function (answers) {
+          if(answers.firstChoice === 'y'){
+            console.log("Youre total is: $" + chosenItemPrice * answer.amount);
+             connection.query(
+            
+             "UPDATE products SET quantity=quantity - 1 WHERE id = id",
         [
             {
                 quantity: answer.amount 
@@ -97,10 +96,18 @@ start = () => {
                 if(answers.firstChoice === 'y'){
                     start();
                 } else {
-                    console.log('Goodbye.');
+                    console.log('Thanks for shopping! Proceed to checkout.');
                     connection.end();
                 }
             });
+        } else {
+            start();
+        }
+    });
+
+          
+        
+         
          
       }
         
@@ -113,8 +120,8 @@ start = () => {
 readProducts = () => {
   connection.query("SELECT * FROM products", function (err, res) {
     if (err) throw err;
-    // Log all results of the SELECT statement
-    console.log(res);
+
+   
   });
 }
 
